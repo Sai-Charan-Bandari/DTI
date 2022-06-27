@@ -1,17 +1,151 @@
+*{
+    border-radius: 5px;;
+}
+button{
+    /* text-align: center; */
+    margin:auto;
+    cursor: pointer;
+}
+button:hover{
+    background-color: whitesmoke;
+    border:5px solid red ;
+    border-radius:3px;
+}
 header{
     background-color: red;
     border-radius: 3px;
     display:flex;
     align-items: center;
+    border-radius: 5px;
 }
 .center{
-    margin:auto
+    font-size: 50px;
+    margin:auto;
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-.right{
-
+.left img{
+    width:70px;
+    height :70px;
+    border-radius: 50%;
+    border:transparent;
+    margin:20px;
 }
 .left{
     
+}
+.right{
+    display:flex;
+    margin:20px;
+}
+.right button{
+    width:50px;
+    height:50px;
+    margin:10px;
+    background-color: whitesmoke;
+    border: none ;
+    /* box-shadow: 1 1 1 1; */
+    border-radius:3px;
+    
+}
+.right button:hover{
+    background-color: lightblue;
+    border:10px solid black;
+    /* align-items:center */
+}
+.body{
+    margin-top:10px;
+    padding:20px;
+    background-color: lightblue;
+   display: flex;
+   /* padding:10px; */
+}
+.navmenu{
+    width:20%;
+    background-color: red;
+    display:flex;
+    flex-direction: column;
+    margin-right:30px;
+
+}
+.navmenu div{
+    width:65%;
+    margin:10px auto;
+    background-color: whitesmoke;
+    display:flex;
+    flex-direction: column;
+    font-size: 30px;
+}
+
+.navmenu span{
+    /* for creating space between the icons in span in a and  the text in a*/
+    margin:auto 20px;
+}
+.body a{
+    width:60%;
+    margin: 10px auto ;
+    padding:5px;
+    text-decoration: none;
+    background-color: whitesmoke;
+    border-radius: 3px;
+    display:flex;
+    /* align-items:right; */
+    font-size: 20px;
+    /* text-align: right; */
+}
+.body a:hover{
+    border: 5px solid black;
+}
+.search{
+    display:flex;
+    flex-direction: column;
+    background-color: black;
+    width:100%;
+    text-align: center;
+    padding: 10px 10px;
+}
+.search div{
+    /* margin :20px 20px; */
+    display: flex;
+}
+.search input{
+    height: 50px;
+    width:40%;
+    margin:5px;
+}
+.search input:placeholder-shown{
+    font-size: 20px;
+    text-align: center;
+}
+.search button{
+  width:50px;
+  height:50px;
+  margin-left:20px;
+}
+.search div label{
+    padding:5px 5px;
+    
+    align-items: center;
+    color:black;
+    font-size:22px;
+    background-color: whitesmoke;
+    width:30%;
+    cursor: pointer;
+    margin:auto;
+    /* margin-right:none; */
+}
+.search div label select{
+    width:70px;
+    height:40px;
+}
+.search div label select option{
+    font-size: 25px;
+}
+#headinglabel{
+    width:100%;
+    /* display:block; */
+    cursor: pointer;
+    font-size:30px;
+    color:whitesmoke;
+    margin:auto auto;
 }
