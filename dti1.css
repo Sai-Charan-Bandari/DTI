@@ -81,6 +81,21 @@ header{
     /* for creating space between the icons in span in a and  the text in a*/
     margin:auto 20px;
 }
+#request{
+    /* padding:auto; */
+    /* margin-top:22px; */
+    width:70%;
+    background-color: black;
+    color:white;
+    height:50px;
+    font-size: 25px;
+    /* padding-top:25px; */
+    display: flex;
+    align-items: center;
+    padding:10px;
+    padding-right:25px;
+    /* Donno how this worked , but it did */
+}
 .body a{
     width:60%;
     margin: 10px auto ;
