@@ -1,0 +1,62 @@
+<!-- <div class="mapouter">
+    <div class="gmap_canvas">
+        <iframe class="gmap_iframe" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=674&amp;height=621&amp;hl=en&amp;q=India&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+
+        </iframe>
+        <a href="https://www.kokagames.com/fnf-friday-night-funkin-mods/">FNF Mods</a>
+        </div>
+        <style>
+        .mapouter{position:relative;text-align:right;width:674px;height:621px;}
+        .gmap_canvas {overflow:hidden;background:none!important;width:674px;height:621px;}
+        .gmap_iframe {width:674px!important;height:621px!important;}
+        </style>
+        </div> -->
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            <script>
+                var temp_lat = '';
+    var temp_lng = '';
+    var map;
+    var infowindow;
+    getLocation();
+    function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+            temp_lat = 0.0; //set default lat value
+            temp_lng = 0.0; //set default lng value
+    }
+}
+
+function showPosition(position) {
+    temp_lat = position.coords.latitude;
+    temp_lng = position.coords.longitude;
+    initMap();
+}
+
+
+ function initMap() 
+ {
+ var pyrmont = {lat: temp_lat, lng: temp_lng};
+ map = new google.maps.Map(document.getElementById('map'),
+ { center: pyrmont, zoom: 15 }); 
+ infowindow = new google.maps.InfoWindow(); 
+ var service = new google.maps.places.PlacesService(map);  service.nearbySearch(
+ { location: pyrmont, radius: 500, type: ['school'] },
+ callback); } 
+ function callback(results, status) { 
+ if (status === google.maps.places.PlacesServiceStatus.OK) 
+ { 
+ for (var i = 0; i < results.length; i++) 
+ { createMarker(results[i]); } } } function createMarker(place) { var placeLoc = place.geometry.location; var marker = new google.maps.Marker({ map: map, position: place.geometry.location }); google.maps.event.addListener(marker, 'click', function() { infowindow.setContent(place.name); infowindow.open(map, this); }); }
+            </script>
+        </body>
+        </html>
