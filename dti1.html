@@ -55,12 +55,12 @@
                     <button class="material-icons">search</button>
                     <label >
                         Select a Location
-                        <select name="" id="">
-                            <option value="">Select</option>
-                            <option value="">Hyd</option>
-                            <option value="">Vizag</option>
-                            <option value="">Vizianagaram</option>
-                            <option value="">Srikakulam</option>
+                        <select name="" id="SelectOption">
+                            <option value="0">Select</option>
+                            <option value="1">Hyd</option>
+                            <option value="2">Vizag</option>
+                            <option value="3">Vizianagaram</option>
+                            <option value="4">Srikakulam</option>
                         </select>
                     </label>
                     <button  class="material-icons" onclick="getLocation()">location_on</button>
@@ -163,9 +163,30 @@ function showPosition(position) {
 //   x.innerHTML = "Latitude: " + position.coords.latitude + 
 //   "<br>Longitude: " + position.coords.longitude;
 }
+////////////////////////////////////////////////////////
+//below function is for the select box in map location
+document.getElementById('SelectOption').addEventListener('change', function() {
+    let e=document.getElementById( "SelectOption" );
+  val = e.value;
+    
+  console.log(val)
+  if(val == 1) {
+    window.open("https://www.google.com/maps/search/hospitals+and+bloodbanks+in+hyderabad/@17.4384489,78.4153108,11.96z",'_blank');
+}
+else if(val == 2) {
+    window.open("https://www.google.com/maps/search/hospitals+and+bloodbanks+in+vizag/@17.7426258,83.1938474,12z/data=!3m1!4b1", '_blank');
+}
+else if(val == 3) {
+    window.open("https://www.google.com/maps/search/hospitals+and+bloodbanks+in+vizianagaram/@18.1114368,83.3816301,14z/data=!3m1!4b1", '_blank');
+  }
+  else if(val == 4) {
+      window.open("https://www.google.com/maps/search/hospitals+and+bloodbanks+in+srikakulam/@18.3205287,83.8613781,13z/data=!3m1!4b1", '_blank');
+    }
+    e.value=0;
+    console.log(e.value);
+});
 
 
-
-            </script>
+</script>
 </body>
 </html>
