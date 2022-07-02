@@ -158,6 +158,10 @@ header{
   height:50px;
   margin-left:20px;
 }
+#loc{
+    font-size: 17px;
+    text-align: center;
+}
 .search div label{
     padding:5px 5px;
     

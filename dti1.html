@@ -71,9 +71,9 @@
 
     <div class="lowBody">
         <div><a href="https://www.who.int/campaigns/world-blood-donor-day/2018/who-can-give-blood">Am I eligible to Donate Blood ?</a>
-            <img src="https://www.adventisthealthcare.com/app/files/public/Content%20Hub/blood%20donation.jpg" alt="">
+            <!-- <img src="https://www.adventisthealthcare.com/app/files/public/Content%20Hub/blood%20donation.jpg" alt=""> -->
         </div>
-        <div><a href="">Join a Blood Donation Camp</a>
+        <div><a href="https://www.ivolunteer.in/opportunity/a0C7F00000B6M3ZUAV/one-day-blood-donation-camp-in-association-with-lioness-club-delhi-metropolitan">Join a Blood Donation Camp</a>
             <img src="http://csrbox.org/company/proj_img/1570703417blood%20donation.jpg" alt="">        
         </div>
         <div><a href="">List of Hospitals and Blood Banks </a>
@@ -139,53 +139,8 @@
             <button><span class="material-icons">send</span><span>Sent</span></button>
             <button><span class="material-icons">drafts</span><span>Drafts</span></button> -->
 
-<script>
-                // setTimeout(signup,10000);
-                function signup()
-                {
-                    alert("Please consider signing up");
-                }
+<script src="dti1.js">
                
-// var x = document.getElementById("demo");
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-
-function showPosition(position) {
-    console.log("Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude);
-
-//   x.innerHTML = "Latitude: " + position.coords.latitude + 
-//   "<br>Longitude: " + position.coords.longitude;
-}
-////////////////////////////////////////////////////////
-//below function is for the select box in map location
-document.getElementById('SelectOption').addEventListener('change', function() {
-    let e=document.getElementById( "SelectOption" );
-  val = e.value;
-    
-  console.log(val)
-  if(val == 1) {
-    window.open("https://www.google.com/maps/search/hospitals+and+bloodbanks+in+hyderabad/@17.4384489,78.4153108,11.96z",'_blank');
-}
-else if(val == 2) {
-    window.open("https://www.google.com/maps/search/hospitals+and+bloodbanks+in+vizag/@17.7426258,83.1938474,12z/data=!3m1!4b1", '_blank');
-}
-else if(val == 3) {
-    window.open("https://www.google.com/maps/search/hospitals+and+bloodbanks+in+vizianagaram/@18.1114368,83.3816301,14z/data=!3m1!4b1", '_blank');
-  }
-  else if(val == 4) {
-      window.open("https://www.google.com/maps/search/hospitals+and+bloodbanks+in+srikakulam/@18.3205287,83.8613781,13z/data=!3m1!4b1", '_blank');
-    }
-    e.value=0;
-    console.log(e.value);
-});
-
 
 </script>
 </body>
