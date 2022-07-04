@@ -77,22 +77,23 @@
        Emergency Blood Requirement
     </div>
      <div class="inner">
-        <table>
+        <table id="table">
             <tr id="tab_heading">
-                <td colspan="6">List of Recepients</td>
+                <td colspan="7">List of Recepients</td>
              </tr>
             <tr>
                 <td class="attribute">Name</td>
-                <td class="attribute">Blood Group</td>
                 <td class="attribute">Age</td>
-                <td class="attribute">City</td>
+                <td class="attribute">Blood Group</td>
+                <td class="attribute">Guardian Ph</td>
                 <td class="attribute">Hospital</td>
-                <td class="attribute">Date</td>
+                <!-- <td class="attribute">City</td> -->
+                <!-- <td class="attribute">Date</td> -->
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>Charan</td>
-                <td>O+</td>
                 <td>19</td>
+                <td>O+</td>
                 <td>Vizag</td>
                 <td>K G H</td>
                 <td>28/06/2022</td>
@@ -100,17 +101,60 @@
             </tr>
             <tr>
                 <td>Sailesh</td>
-                <td>AB-</td>
                 <td>63</td>
+                <td>AB-</td>
                 <td>Vizag</td>
                 <td>Seven Hills Hospital</td>
                 <td>21/06/2022</td>
 
-            </tr>
+            </tr> -->
 
            </table>
 
+           <!-- <table id="table"></table> -->
     </div>
+    <div id="d"></div>
 </div>
+<script>
+
+    let name=localStorage.getItem("name");
+    let age=localStorage.getItem("age");
+    let bloodgrp=localStorage.getItem("bloodgrp");
+    let ph=localStorage.getItem("ph");
+    let hsp=localStorage.getItem("hsp");
+
+    let nlist=name.split(',');
+    let alist=age.split(',');
+    let blist=bloodgrp.split(',');
+    let plist=ph.split(',');
+    let hlist=hsp.split(',');
+
+    let length=nlist.length;
+    document.getElementById("d").innerHTML += name+" "+length;
+
+    table=document.getElementById("table");
+    //the following functions are related to table tag
+    for(let i=0;i<length;i++)
+    {
+        //insertRow(i) inserts a row in the specified index
+        //due to which the first inserted row is above the rows with column headings and table title
+        //similarly each inserted row goes to its specified order and our pre-written 2 rows will end up last    
+        //so we use insertRow(-1) to insert each row at last index 
+        let newRow = table.insertRow(-1);
+        let cell1 = newRow.insertCell();
+        let cell2 = newRow.insertCell();
+        let cell3 = newRow.insertCell();
+        let cell4 = newRow.insertCell();
+        let cell5 = newRow.insertCell();
+
+        cell1.innerHTML=nlist[i];
+        cell2.innerHTML=alist[i];
+        cell3.innerHTML=blist[i];
+        cell4.innerHTML=plist[i];
+        cell5.innerHTML=hlist[i];
+        console.log(i);
+    }
+
+</script>
 </body>
 </html>

@@ -90,21 +90,50 @@
         Send Request To Donors
     </div>
      <div class="inner">
-        <input type="text" placeholder="Enter Patient Name">
-        <input type="text" placeholder="Age">
-        <input type="text" placeholder="Blood Group">
-        <input type="text" placeholder="Guardian Phone No">
-        <input type="text" placeholder="Hospital Address">
-        <!-- <input type="text" placeholder="Pincode"> -->
-        <div class="gender">
+        <input id="n" type="text" placeholder="Enter Patient Name">
+        <input id="a" type="text" placeholder="Age">
+        <input id="b" type="text" placeholder="Blood Group">
+        <input id="g" type="text" placeholder="Guardian Phone No">
+        <input id="h" type="text" placeholder="Hospital Address">
+        <!-- temporarily i am not using gender input -->
+        <!-- <div class="gender">
             <label for="m">Male</label>
             <input type="radio" name="gender" id="m">
             <label for="f">Female</label>
             <input type="radio" name="gender" id="f">
-        </div>
-        <input type="submit" value="Send Request">
+        </div> -->
+        <input type="submit" value="Send Request" onclick="addValues()">
 
     </div>
+    <!-- <div id="d"></div> -->
 </div>
+<script>
+    let length=0;
+    let name=[];
+    let age=[];
+    let bloodgrp=[];
+    let ph=[];
+    let hsp=[];
+
+    function addValues()
+ {
+    name.push(document.getElementById("n").value);
+    age.push(document.getElementById("a").value);
+    bloodgrp.push(document.getElementById("b").value);
+    ph.push(document.getElementById("g").value);
+    hsp.push(document.getElementById("h").value);
+
+    localStorage.setItem("name",name);
+    localStorage.setItem("age",age);
+    localStorage.setItem("bloodgrp",bloodgrp);
+    localStorage.setItem("ph",ph);
+    localStorage.setItem("hsp",hsp);
+    length++;
+    localStorage.setItem("length",length); //saved as a string
+    alert(name +"::"+age+"::"+bloodgrp+"::"+ph+"::"+hsp+"::"+length);
+    // document.getElementById("div").innerHTML += localStorage.getItem("name");
+    document.getElementById("n").value="";
+ }
+</script>
 </body>
 </html>
