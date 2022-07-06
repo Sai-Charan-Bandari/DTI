@@ -22,7 +22,7 @@
         
         <div class="right">
             
-            <button><span class="material-icons"> menu</span></button>
+            <button onclick="disclose()"><span class="material-icons"> info</span></button>
             <button onclick="location.href='https://play.google.com/store/search?q=blood+donation+apps&c=apps'"><span class="material-icons" ><span class="material-icons">apps</span></button>
             <button onclick="location.href='dti1_accountdetails.html'"><span class="material-icons">person</span></button>
 
@@ -53,7 +53,9 @@
                 <label id="headinglabel" for="loc">Search nearby Hospitals and Blood Banks</label>
                 <div>
                     <input id="loc" type="text" placeholder="Add location">
-                    <button class="material-icons">search</button>
+                    <!-- temporarily added a map of 'clg to kgh' for below search button  -->
+                    <!-- need to change later to show original location map -->
+                    <button class="material-icons" onclick="location.href='https://www.google.com/maps/dir/Gayatri+Vidya+Parishad+College+of+Engineering+(Autonomous)+(GVP)+(GVPCE),+Gandhi+Nagar,+Madhurawada,+Visakhapatnam,+Andhra+Pradesh/King+George+Hospital,+KGH+Down+Rd,+Opp+KGH+OP+Gate,+Maharani+Peta,+Visakhapatnam,+Andhra+Pradesh+531011/@17.7791621,83.2796252,12.59z/data=!4m13!4m12!1m5!1m1!1s0x3a395bedc7efb603:0x87c06caab54e902a!2m2!1d83.342295!2d17.8204597!1m5!1m1!1s0x3a39430fd9c85ff5:0x968bce337f0096bc!2m2!1d83.3060385!2d17.7087374'">search</button>
                     <label >
                         Select a Location
                         <select name="" id="SelectOption">
@@ -72,7 +74,7 @@
 
     <div class="lowBody">
         <div><a href="https://www.who.int/campaigns/world-blood-donor-day/2018/who-can-give-blood">Am I eligible to Donate Blood ?</a>
-            <!-- <img src="https://www.adventisthealthcare.com/app/files/public/Content%20Hub/blood%20donation.jpg" alt=""> -->
+            <img src="https://www.adventisthealthcare.com/app/files/public/Content%20Hub/blood%20donation.jpg" alt="">
         </div>
         <div><a href="https://www.ivolunteer.in/opportunity/a0C7F00000B6M3ZUAV/one-day-blood-donation-camp-in-association-with-lioness-club-delhi-metropolitan">Join a Blood Donation Camp</a>
             <img src="http://csrbox.org/company/proj_img/1570703417blood%20donation.jpg" alt="">        
@@ -126,6 +128,10 @@
 
            </table>
         </div>
+        <div id="disclose">
+            Project under Design Thinking And Innovation <br>
+            Designed and Developed by BSC.
+        </div>
     </div>
 
 
@@ -140,8 +146,7 @@
             <button><span class="material-icons">send</span><span>Sent</span></button>
             <button><span class="material-icons">drafts</span><span>Drafts</span></button> -->
 
-<script src="dti1.js">
-               
+<script src="dti1.js">          
 
 </script>
 </body>

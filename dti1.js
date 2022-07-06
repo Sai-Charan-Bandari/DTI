@@ -1,4 +1,4 @@
- // setTimeout(signup,15000);
+ setTimeout(signup,15000);
  function signup()
  {
      alert("Please consider signing up");
@@ -45,3 +45,13 @@ e.value=0;
 console.log(e.value);
 });
 /////////////////////////////////////////////////////
+function disclose()
+{
+  let x=document.getElementById("disclose");
+  if(x.style.display == 'none')
+  {
+    x.style.display = 'block';
+  }
+  else
+  x.style.display = 'none';
+}

@@ -52,7 +52,7 @@ header{
 }
 .right button:hover{
     background-color: lightblue;
-    border:10px solid black;
+    border:5px solid black;
     /* align-items:center */
 }
 .aboveBody{
@@ -233,11 +233,23 @@ header{
 .attribute{
     font-weight: bold;
 }
+#disclose{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    background-color: darkred;
+    color:whitesmoke;
+    font-size: larger;
+   text-align: center;
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
+   display: none;
+}
 /* #table{
     display:grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    /* align-items: center; */
-}
+    /* align-items: center; 
+}*/
 
 /* #table div{
     border:3px solid white;
