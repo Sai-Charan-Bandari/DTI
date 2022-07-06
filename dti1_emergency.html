@@ -114,6 +114,7 @@
            <!-- <table id="table"></table> -->
     </div>
     <div id="d"></div>
+    <div id="d2"></div>
 </div>
 <script>
 
@@ -122,15 +123,42 @@
     let bloodgrp=localStorage.getItem("bloodgrp");
     let ph=localStorage.getItem("ph");
     let hsp=localStorage.getItem("hsp");
+    let addr=localStorage.getItem("addr");
 
     let nlist=name.split(',');
     let alist=age.split(',');
     let blist=bloodgrp.split(',');
     let plist=ph.split(',');
     let hlist=hsp.split(',');
+    let addrlist=addr.split('$');
 
     let length=nlist.length;
-    document.getElementById("d").innerHTML += name+" "+length;
+
+    //tester
+    {
+        //initalizing to empty so that prev list of links is removed from div("d") and
+        // replaced with new updated list of links
+        document.getElementById("d").innerHTML = "";
+        let addr=localStorage.getItem("addr");
+        let addrlist=addr.split('$');
+        for(let i=0;i<length;i++)
+       {
+        document.getElementById("d").innerHTML += "<div>"+addrlist[i]+"</div>";
+        console.log(addrlist[i]);
+       }
+      }
+        //end of tester code
+
+    //tester2
+    {
+        //initalizing to empty so that prev list of links is removed from div("d") and
+        // replaced with new updated list of links
+        document.getElementById("d2").innerHTML = "ADDR ::: ";
+        let =localStorage.getItem("addr");
+        document.getElementById("d2").innerHTML += addr;
+       
+      }
+        //end of tester code
 
     table=document.getElementById("table");
     //the following functions are related to table tag
@@ -151,7 +179,7 @@
         cell2.innerHTML=alist[i];
         cell3.innerHTML=blist[i];
         cell4.innerHTML=plist[i];
-        cell5.innerHTML=hlist[i];
+        cell5.innerHTML='<a href="' + addrlist[i] + '" target="_blank">'+ hlist[i] + '</a>';
         console.log(i);
     }
 

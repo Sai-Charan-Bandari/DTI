@@ -94,7 +94,8 @@
         <input id="a" type="text" placeholder="Age">
         <input id="b" type="text" placeholder="Blood Group">
         <input id="g" type="text" placeholder="Guardian Phone No">
-        <input id="h" type="text" placeholder="Hospital Address">
+        <input id="h" type="text" placeholder="Hospital Name">
+        <input id="addr" type="text" placeholder="Hospital Address">
         <!-- temporarily i am not using gender input -->
         <!-- <div class="gender">
             <label for="m">Male</label>
@@ -105,34 +106,122 @@
         <input type="submit" value="Send Request" onclick="addValues()">
 
     </div>
-    <!-- <div id="d"></div> -->
+    <div id="d" style="box-sizing:border-box"></div>
 </div>
 <script>
-    let length=0;
-    let name=[];
-    let age=[];
-    let bloodgrp=[];
-    let ph=[];
-    let hsp=[];
+    //THE BELOW COMMENTED CODE WAS USED INITALLY TO CREATE EMPTY ARRAYS AND PUSH 
+    //THE ARRAY VALUES (IN THE FORM OF STRINGS) INTO THE LOCAL STORAGE.
+    //IT WORKED WELL AND ADDED THE TUPLES INTO THE EMERGENCY LIST 
+    //IF WE FILLED THE FORM MULTIPLE TIMES .. MULTIPLE TUPLES ARE GENERATED
+    //BUT WHENEVER WE ENTERED INTO THE SEND REQUEST WEBPAGE AGAIN OR RELOAD IT
+    // IT WOULD REINITIALIZE THE ARRAYS AS EMPTY.
+    //DUE TO WHICH PREVIOUSLY WRITTEN TUPLES ARE REMOVED
+    //BUT IF WE FILL THE FORM NOW, THEN A NEW TUPLE WILL BE ADDED TO TABLE
+    //{ SOLUTION:
+    //AS THE REQUIRED ITEMS HAVE ALREADY BEEN CREATED IN LOCAL STORAGE DUE TO USING THE COMMENTED 
+    //CODE AT EARLY STAGES.I CREATED THE UNCOMMENTED CODE 
+    //TO GET ITEMS FROM LOCAL STORAGE , ADD NEW FORM DATA, AND SET ITEMS BACK (RE INSERT) INTO LOCAL STORAGE.
+    //THIS ENSURES THAT THE PREVIOUS DATA IN LOCAL STORAGE IS NOT RE INITIALIZED TO EMPTY.
+    //THUS THE NEW CODE IS WORKING ONLY BCOZ THE PREVIOUS CODE WAS USED TO CREATE AND SET ITEMS INTO LOCAL STORAGE.
+    //}
 
-    function addValues()
- {
-    name.push(document.getElementById("n").value);
-    age.push(document.getElementById("a").value);
-    bloodgrp.push(document.getElementById("b").value);
-    ph.push(document.getElementById("g").value);
-    hsp.push(document.getElementById("h").value);
+    // //OLD CODE (INITAL CODE)
+    // let length=0;
+    // let name=[];
+    // let age=[];
+    // let bloodgrp=[];
+    // let ph=[];
+    // let hsp=[];
+    // let addr="";
 
-    localStorage.setItem("name",name);
-    localStorage.setItem("age",age);
-    localStorage.setItem("bloodgrp",bloodgrp);
-    localStorage.setItem("ph",ph);
-    localStorage.setItem("hsp",hsp);
+    //     function addValues()
+    //  {
+    //     name.push(document.getElementById("n").value);
+    //     age.push(document.getElementById("a").value);
+    //     bloodgrp.push(document.getElementById("b").value);
+    //     ph.push(document.getElementById("g").value);
+    //     hsp.push(document.getElementById("h").value);
+    //     addr += document.getElementById("addr").value + "$";//used "$" as separator bcoz it's not used in link
+
+    
+    //     localStorage.setItem("name",name);
+    //     localStorage.setItem("age",age);
+    //     localStorage.setItem("bloodgrp",bloodgrp);
+    //     localStorage.setItem("ph",ph);
+    //     localStorage.setItem("hsp",hsp);
+    //     localStorage.setItem("addr",addr);
+    //     length++;
+    //     localStorage.setItem("length",length); //saved as a string
+    //     // alert(name +"::"+age+"::"+bloodgrp+"::"+ph+"::"+hsp+"::"+addr+"::"+length);
+    //     //tester
+    //    {
+    //     //initalizing to empty so that prev list of links is removed from div("d") and
+    //     // replaced with new updated list of links
+    //     document.getElementById("d").innerHTML = "";
+    //     let addr=localStorage.getItem("addr");
+    //     let addrlist=addr.split('$');
+    //     for(let i=0;i<length;i++)
+    //    {
+    //     document.getElementById("d").innerHTML += "<div>"+addrlist[i]+"</div>";
+    //     console.log(addrlist[i]);
+    //    }
+    //   }
+    //     //end of tester code
+    //     document.getElementById("n").value="";
+    //  }
+
+        //NEW CODE
+        function addValues()
+{
+    let name=localStorage.getItem("name");
+    let age=localStorage.getItem("age");
+    let bloodgrp=localStorage.getItem("bloodgrp");
+    let ph=localStorage.getItem("ph");
+    let hsp=localStorage.getItem("hsp");
+    let addr=localStorage.getItem("addr");
+    
+    let nlist=name.split(',');
+    let alist=age.split(',');
+    let blist=bloodgrp.split(',');
+    let plist=ph.split(',');
+    let hlist=hsp.split(',');
+    // let addrlist=addr.split('$'); //we dont need to use list of addresses here
+    //we cannot use ',' for split as each map link contains many commas 
+      //used "$" as separator bcoz it's not used in link
+    let length=nlist.length;
+
+    nlist.push(document.getElementById("n").value);
+    alist.push(document.getElementById("a").value);
+    blist.push(document.getElementById("b").value);
+    plist.push(document.getElementById("g").value);
+    hlist.push(document.getElementById("h").value);
+    addr += document.getElementById("addr").value + "$";
+
+    localStorage.setItem("name",nlist);
+    localStorage.setItem("age",alist);
+    localStorage.setItem("bloodgrp",blist);
+    localStorage.setItem("ph",plist);
+    localStorage.setItem("hsp",hlist);
+    localStorage.setItem("addr",addr);
     length++;
     localStorage.setItem("length",length); //saved as a string
-    alert(name +"::"+age+"::"+bloodgrp+"::"+ph+"::"+hsp+"::"+length);
-    // document.getElementById("div").innerHTML += localStorage.getItem("name");
+    // alert(nlist +"::"+alist+"::"+blist+"::"+plist+"::"+hlist+"::"+addr+"::"+length);
     document.getElementById("n").value="";
+
+     //tester
+     {
+        //initalizing to empty so that prev list of links is removed from div("d") and
+        // replaced with new updated list of links
+        document.getElementById("d").innerHTML = "";
+        let addr=""+localStorage.getItem("addr");
+        let addrlist=addr.split('$');
+        for(let i=0;i<length;i++)
+       {
+        document.getElementById("d").innerHTML += "<div>"+addrlist[i]+"</div>";
+        console.log(addrlist[i]);
+       }
+      }
+        //end of tester code
  }
 </script>
 </body>
