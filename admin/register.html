@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon" href="https://image.shutterstock.com/image-vector/vector-drop-hands-icon-simply-260nw-13158760.jpg">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="dti1.css">
+    <link rel="stylesheet" href="../dti1.css">
 
     <style>
         header{
@@ -88,71 +88,41 @@
 </header>
 <div class="body" >
     <div class="signupheading">
-        Send Request To Donors
+        Hospital Registration
     </div>
      <div class="inner">
-        <div id="title" style="color:white;background-color: black;text-align: center;padding:5px;"></div>
-        <input id="n" type="text" placeholder="Enter Patient Name">
-        <input id="a" type="number" placeholder="Age">
-        <input id="b" type="text" placeholder="Blood Group">
-        <div class="gender">
-            <label for="m">Male</label>
-            <input type="radio" name="gender" id="m" checked>
-            <label for="f">Female</label>
-            <input type="radio" name="gender" id="f">
-        </div>
-        <input id="g" type="number" placeholder="Guardian Phone No">
-        <input type="submit" value="Send Request" onclick="submitData()">
-
+        <input type="text" placeholder="Enter Hospital name">
+        <input type="text" placeholder="Hospital Id">
+        <input type="number" placeholder="Phone No">
+        <input type="text" placeholder="Address">
+        <input type="number" placeholder="Pincode">
+        <input type="text" placeholder="UserId/Email">
+        <input type="text" placeholder="Password">
+        <button onclick="submitData()" style="width: 100%;padding: 15px;">Submit</button>
     </div>
-    <div id="d" style="box-sizing:border-box"></div>
 </div>
+</body>
 <script>
-    //this is the root object for this pg
-    //it will be initialized by validateUser()
-    let hospitalData=null
-
-    async function validateUser(){
-        //PROBLEM :
-        //VALIDATION TAKES PLACE USING HOSPITAL ID WHICH IS STORED IN LOCALSTORAGE AND UNPROTECTED ,SO WE CANT PUT UID/PSSWD IN LOCAL STORAGES
-        //ANYONE WHO KNOWS ONLY HOSPITAL ID CAN MANIPULATE LOCALSTORAGE ITEM AND CAN LOGIN
-        let u=localStorage.getItem('dti_user')
-    if(!u){
-        document.getElementsByTagName('body')[0].innerHTML='Plz login'
-    }else if(JSON.parse(u).type==false){
-        document.getElementsByTagName('body')[0].innerHTML='User cannot access this page'
-    }else {
-        try{
-        let k=await fetch('http://localhost:7000/validate-hospital-account/'+JSON.parse(u).id)
-        hospitalData=await k.json()
-        document.getElementById('title').innerHTML=`Signed in as ${hospitalData.name}`
-        }catch(e){
-            document.getElementsByTagName('body')[0].innerHTML='Could not find account'
-        }
-    }
-    }
-    validateUser()
-
-    async function submitData(){
+    alert('Only admin is allowed to register hospitals')
+   async function submitData(){
+       if(confirm('Confirm to register Hospital')){
         let inputs=document.getElementsByTagName('input')
         let name=inputs[0].value
-        let age=inputs[1].value
-        let bloodgroup=inputs[2].value
-        let phone=inputs[5].value
-        let gender=inputs[3].checked ? 'male' : 'female'
-        // console.log({
-        //     name,age,bloodgroup,phone,gender
-        // })
-       let k=await fetch(`http://localhost:7000/add-patient/${hospitalData.name}/${JSON.parse(localStorage.getItem('dti_user')).id}`,{method:"post",body:JSON.stringify({
-            name,age,bloodgroup,gender,phone
+        let hospitalid=inputs[1].value
+        let phone=inputs[2].value
+        let address=inputs[3].value
+        let pincode=inputs[4].value
+        let uid=inputs[5].value
+        let password=inputs[6].value
+       let k=await fetch('http://localhost:7000/hospital-account',{method:"post",body:JSON.stringify({
+            name,hospitalid,phone,address,pincode,uid,password
         }),headers:{"Content-Type":"application/json"}})
         try{
             k=await k.json()
-            alert('added patient details',k.name)
-        }catch(e){alert('patient already exists')}
+            alert('registered hospital ',k.name)
+        }catch(e){alert('hospital already registered')}
+        // console.log(k)
+       }
     }
-
-       
 </script>
-</body>
 </html>

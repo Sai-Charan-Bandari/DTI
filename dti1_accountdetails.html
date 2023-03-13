@@ -26,6 +26,7 @@
         .inner input{
             height: 60px;
             font-size:20px;
+            text-align: center;
         }
         .inner input:placeholder-shown{
             font-size:20px;
@@ -90,13 +91,14 @@
     <div class="signupheading">
         My Account
     </div>
-     <div class="inner">
-        <input type="text" placeholder="Charan">
-        <input type="text" placeholder="26">
-        <input type="text" placeholder="AB-">
-        <input type="text" placeholder="8768719870">
-        <input type="text" placeholder="Madhurawada Visakhapatnam">
-        <input type="text" placeholder="530048">
+    <!-- USER ACC -->
+     <div class="inner" id="user" style="display: none;">
+        <input type="text" placeholder="name">
+        <input type="number" placeholder="age">
+        <input type="text" placeholder="bloodgroup">
+        <input type="text" placeholder="phone">
+        <input type="text" placeholder="address">
+        <input type="text" placeholder="pincode">
         <div class="gender">
             <label for="m">Male</label>
             <input type="radio" name="gender" id="m" checked>
@@ -105,9 +107,66 @@
         </div>
         <input type="text" placeholder="No. of Donations : 2">
         <input type="text" placeholder="Last Donation on : 23/08/2021">
-        <input type="button" value="Log Out">
-
+        <input type="button" value="Log Out" onclick="logout()">
+    </div>
+    <!-- HOSPITAL ACC -->
+     <div class="inner" id="hospital" style="display: none;">
+        <input type="text" placeholder="Hospital">
+        <input type="text" placeholder="hid">
+        <input type="text" placeholder="8768719870">
+        <input type="text" placeholder="Madhurawada Visakhapatnam">
+        <input type="text" placeholder="530048">
+        <input type="button" value="Goto Authorized Actions" onclick="window.open('dti1_login.html','_parent')">
+        <input type="button" value="Log Out" onclick="logout()">
     </div>
 </div>
 </body>
+<script>
+    async function findUser(){
+        let u=localStorage.getItem('dti_user')
+    if(!u){
+        document.getElementsByTagName('body')[0].innerHTML='Plz login'
+    }else if(JSON.parse(u).type==false){
+        document.getElementById('user').style.display='flex'
+        try{
+            let k=await fetch('http://localhost:7000/validate-user-account/'+JSON.parse(u).id)
+            let userData=await k.json()
+            let children=document.getElementById('user').children
+            children[0].value=userData.name
+            children[1].value=userData.age
+            children[2].value=userData.bloodgroup
+            children[3].value=userData.phone
+            children[4].value=userData.address
+            children[5].value=userData.pincode
+            if(userData.gender=='female')
+            children[7].checked=true
+            // children[8].value=userData.pincode
+            // children[9].value=userData.pincode
+        }catch(e){
+            document.getElementById('user').innerHTML='Could not find account'
+        }
+    }else {
+        document.getElementById('hospital').style.display='flex'
+        try{
+            let k=await fetch('http://localhost:7000/validate-hospital-account/'+JSON.parse(u).id)
+            let hospitalData=await k.json()
+            let children=document.getElementById('hospital').children
+            children[0].value=hospitalData.name
+            children[1].value=hospitalData.hospitalid
+            children[2].value=hospitalData.phone
+            children[3].value=hospitalData.address
+            children[4].value=hospitalData.pincode
+        }catch(e){
+            document.getElementById('hospital').innerHTML='Could not find account'
+        }
+    }
+    }
+    findUser()
+
+    function logout(){
+        localStorage.removeItem('dti_user')
+        alert('logged out')
+        window.open('index.html','_parent')
+    }
+</script>
 </html>

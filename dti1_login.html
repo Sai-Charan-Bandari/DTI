@@ -89,10 +89,11 @@
 </header>
 <div class="body" >
     <div class="signupheading">
-        Login
+      Hospital Login
     </div>
      <div class="inner">
-        <input type="text" placeholder="User Name" id="uname">
+        <input type="text" placeholder="Hospital Id" id="hospitalid">
+        <input type="text" placeholder="Uid" id="uid">
         <input type="password" placeholder="Password" id="psswd">
         <input type="submit" onclick="check()" value="admin access">
 
@@ -100,12 +101,26 @@
 </div>
 
 <script>
-function check()
+async function check()
 {
-    a=document.getElementById("uname");
-    b=document.getElementById("psswd");
-    if(a.value == "bsc" && b.value == "12345")
-    window.open("dti1_sendrequest.html","_parent");
+    c=document.getElementById("hospitalid").value;
+    a=document.getElementById("uid").value;
+    b=document.getElementById("psswd").value;
+    // get method cannot have body so i am using post
+    let k=await fetch('http://localhost:7000/hospital-account-login',{
+        method:'post',
+        body:JSON.stringify({hospitalid:c,uid:a,password:b})
+        ,headers:{"Content-Type":"application/json"}
+    })
+    try{
+      k=await k.json()
+      localStorage.setItem('dti_user',JSON.stringify({type:true,id:k.hospitalid})) //type=true =>hospital else user
+      alert('logged in')
+      console.log(k)
+      window.open("dti1_hospitalactions.html","_parent");
+    }catch(e){
+        alert('invalid credentials')
+    }
 }
 </script>
 </body>

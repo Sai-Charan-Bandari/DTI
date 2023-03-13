@@ -88,71 +88,51 @@
 </header>
 <div class="body" >
     <div class="signupheading">
-        Send Request To Donors
+        Sign Up
     </div>
      <div class="inner">
-        <div id="title" style="color:white;background-color: black;text-align: center;padding:5px;"></div>
-        <input id="n" type="text" placeholder="Enter Patient Name">
-        <input id="a" type="number" placeholder="Age">
-        <input id="b" type="text" placeholder="Blood Group">
+        <input type="text" placeholder="Enter your Name">
+        <input type="number" placeholder="Age">
+        <input type="text" placeholder="Blood Group">
+        <input type="number" placeholder="Phone No">
+        <input type="text" placeholder="Address">
+        <input type="number" placeholder="Pincode">
         <div class="gender">
             <label for="m">Male</label>
-            <input type="radio" name="gender" id="m" checked>
+            <input type="radio" name="gender" value="male" id="m" checked>
             <label for="f">Female</label>
-            <input type="radio" name="gender" id="f">
+            <input type="radio" name="gender" id="f" value="female">
         </div>
-        <input id="g" type="number" placeholder="Guardian Phone No">
-        <input type="submit" value="Send Request" onclick="submitData()">
-
+        <input type="text" placeholder="UserId/Email">
+        <input type="text" placeholder="Password">
+        <button onclick="submitData()" style="width: 100%;padding: 15px;">Submit</button>
     </div>
-    <div id="d" style="box-sizing:border-box"></div>
 </div>
+</body>
 <script>
-    //this is the root object for this pg
-    //it will be initialized by validateUser()
-    let hospitalData=null
-
-    async function validateUser(){
-        //PROBLEM :
-        //VALIDATION TAKES PLACE USING HOSPITAL ID WHICH IS STORED IN LOCALSTORAGE AND UNPROTECTED ,SO WE CANT PUT UID/PSSWD IN LOCAL STORAGES
-        //ANYONE WHO KNOWS ONLY HOSPITAL ID CAN MANIPULATE LOCALSTORAGE ITEM AND CAN LOGIN
-        let u=localStorage.getItem('dti_user')
-    if(!u){
-        document.getElementsByTagName('body')[0].innerHTML='Plz login'
-    }else if(JSON.parse(u).type==false){
-        document.getElementsByTagName('body')[0].innerHTML='User cannot access this page'
-    }else {
-        try{
-        let k=await fetch('http://localhost:7000/validate-hospital-account/'+JSON.parse(u).id)
-        hospitalData=await k.json()
-        document.getElementById('title').innerHTML=`Signed in as ${hospitalData.name}`
-        }catch(e){
-            document.getElementsByTagName('body')[0].innerHTML='Could not find account'
-        }
-    }
-    }
-    validateUser()
-
-    async function submitData(){
+   async function submitData(){
         let inputs=document.getElementsByTagName('input')
         let name=inputs[0].value
         let age=inputs[1].value
         let bloodgroup=inputs[2].value
-        let phone=inputs[5].value
-        let gender=inputs[3].checked ? 'male' : 'female'
+        let phone=inputs[3].value
+        let address=inputs[4].value
+        let pincode=inputs[5].value
+        let gender=inputs[6].checked ? 'male' : 'female'
+        let uid=inputs[8].value
+        let password=inputs[9].value
         // console.log({
-        //     name,age,bloodgroup,phone,gender
+        //     name,age,bloodgroup,phone,address,pincode,gender,uid,password
         // })
-       let k=await fetch(`http://localhost:7000/add-patient/${hospitalData.name}/${JSON.parse(localStorage.getItem('dti_user')).id}`,{method:"post",body:JSON.stringify({
-            name,age,bloodgroup,gender,phone
+       let k=await fetch('http://localhost:7000/user-account',{method:"post",body:JSON.stringify({
+            name,age,bloodgroup,phone,address,pincode,gender,uid,password
         }),headers:{"Content-Type":"application/json"}})
         try{
             k=await k.json()
-            alert('added patient details',k.name)
-        }catch(e){alert('patient already exists')}
+            alert('created user ',k.name)
+            window.open('index.html','_parent')
+        }catch(e){alert('user already exists')}
+        // console.log(k)
     }
-
-       
 </script>
-</body>
 </html>

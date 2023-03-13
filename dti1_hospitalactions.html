@@ -26,6 +26,7 @@
         .inner input{
             height: 60px;
             font-size:20px;
+            text-align: center ;
         }
         .inner input:placeholder-shown{
             font-size:20px;
@@ -88,27 +89,20 @@
 </header>
 <div class="body" >
     <div class="signupheading">
-        Send Request To Donors
+      Hospital Actions
     </div>
      <div class="inner">
         <div id="title" style="color:white;background-color: black;text-align: center;padding:5px;"></div>
-        <input id="n" type="text" placeholder="Enter Patient Name">
-        <input id="a" type="number" placeholder="Age">
-        <input id="b" type="text" placeholder="Blood Group">
-        <div class="gender">
-            <label for="m">Male</label>
-            <input type="radio" name="gender" id="m" checked>
-            <label for="f">Female</label>
-            <input type="radio" name="gender" id="f">
-        </div>
-        <input id="g" type="number" placeholder="Guardian Phone No">
-        <input type="submit" value="Send Request" onclick="submitData()">
+        <input type="button" value="Send request" onclick="window.open('dti1_sendrequest.html','_parent')">
+        <input type="button" value="Close request" onclick="window.open('dti1_closerequest.html','_parent')">
+        <input type="button" value="Update request" onclick="window.open('dti1_sendrequest.html','_parent')">
+        <input type="button" onclick="logout()" value="logout">
 
     </div>
-    <div id="d" style="box-sizing:border-box"></div>
 </div>
+
 <script>
-    //this is the root object for this pg
+ //this is the root object for this pg
     //it will be initialized by validateUser()
     let hospitalData=null
 
@@ -133,26 +127,11 @@
     }
     validateUser()
 
-    async function submitData(){
-        let inputs=document.getElementsByTagName('input')
-        let name=inputs[0].value
-        let age=inputs[1].value
-        let bloodgroup=inputs[2].value
-        let phone=inputs[5].value
-        let gender=inputs[3].checked ? 'male' : 'female'
-        // console.log({
-        //     name,age,bloodgroup,phone,gender
-        // })
-       let k=await fetch(`http://localhost:7000/add-patient/${hospitalData.name}/${JSON.parse(localStorage.getItem('dti_user')).id}`,{method:"post",body:JSON.stringify({
-            name,age,bloodgroup,gender,phone
-        }),headers:{"Content-Type":"application/json"}})
-        try{
-            k=await k.json()
-            alert('added patient details',k.name)
-        }catch(e){alert('patient already exists')}
+    function logout(){
+        localStorage.removeItem('dti_user')
+        alert('logged out')
+        window.open('index.html','_parent')
     }
-
-       
 </script>
 </body>
 </html>

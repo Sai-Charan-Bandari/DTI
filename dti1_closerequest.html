@@ -88,29 +88,47 @@
 </header>
 <div class="body" >
     <div class="signupheading">
-        Send Request To Donors
+        Close Requests
     </div>
      <div class="inner">
         <div id="title" style="color:white;background-color: black;text-align: center;padding:5px;"></div>
-        <input id="n" type="text" placeholder="Enter Patient Name">
-        <input id="a" type="number" placeholder="Age">
-        <input id="b" type="text" placeholder="Blood Group">
-        <div class="gender">
-            <label for="m">Male</label>
-            <input type="radio" name="gender" id="m" checked>
-            <label for="f">Female</label>
-            <input type="radio" name="gender" id="f">
-        </div>
-        <input id="g" type="number" placeholder="Guardian Phone No">
-        <input type="submit" value="Send Request" onclick="submitData()">
+        <table id="plist">
+           </table>
+        <input type="submit" value="Search for patients" onclick="submitData()">
 
     </div>
     <div id="d" style="box-sizing:border-box"></div>
 </div>
 <script>
-    //this is the root object for this pg
+    //these are the root object for this pg
     //it will be initialized by validateUser()
     let hospitalData=null
+    let patientsList=[]
+
+   async function resetPatientList(){
+        try{
+            let p=await fetch('http://localhost:7000/patient-list/'+hospitalData.hospitalid)
+        patientsList=await p.json()
+                document.getElementById('plist').innerHTML=` <th colspan="4">Hospital List</th>
+            <tr>
+                <td class="attribute">Name</td>
+                <td class="attribute">Age</td>
+                <td class="attribute">Gender</td>
+                <td class="attribute">Bloodgroup</td>
+                <td class="attribute">Close Request</td>
+            </tr>`
+  patientsList.forEach((e) => {
+    document.getElementById('plist').innerHTML += `<tr>
+    <td>${e.name}</td>
+    <td>${e.age}</td>
+    <td>${e.gender}</td>
+    <td>${e.bloodgroup}</td>
+    <td class="attribute" onclick="closeRequest(${JSON.stringify(e).split('"').join("&quot;")})">Close</td>
+    </tr>`
+  }) }catch(e){
+            document.getElementById('plist').innerHTML = 'could not fetch patients list'
+        }
+    }
 
     async function validateUser(){
         //PROBLEM :
@@ -122,6 +140,7 @@
     }else if(JSON.parse(u).type==false){
         document.getElementsByTagName('body')[0].innerHTML='User cannot access this page'
     }else {
+        //getting/verifying hospital
         try{
         let k=await fetch('http://localhost:7000/validate-hospital-account/'+JSON.parse(u).id)
         hospitalData=await k.json()
@@ -129,9 +148,25 @@
         }catch(e){
             document.getElementsByTagName('body')[0].innerHTML='Could not find account'
         }
+        //getting patients list of that hospital
+        resetPatientList()
     }
     }
     validateUser()
+
+    async function closeRequest(obj){
+        // obj=JSON.parse(obj)
+        console.log(obj)
+        alert('are u sure u want to remove this patient.. was the blood request fulfilled , by whom ,reason for closing')
+        let k=await fetch('http://localhost:7000/remove-patient/'+JSON.parse(hospitalData.hospitalid), {
+            method:'delete',
+            body:JSON.stringify(obj)
+            ,headers:{"Content-Type":"application/json"}
+        })
+        k=await k.text()
+        if(k=='X') alert('deletion unsuccessful')
+        else {alert('successfully deleted '+k);resetPatientList()}
+    }
 
     async function submitData(){
         let inputs=document.getElementsByTagName('input')
