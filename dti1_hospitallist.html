@@ -100,6 +100,7 @@
             <tr>
                 <td class="attribute">Name</td>
                 <td class="attribute">Location</td>
+                <td class="attribute">Find Location</td>
                 <td class="attribute">Pincode</td>
             </tr>
            </table>
@@ -122,18 +123,22 @@ getHospitalList()
 
 //search a hospital
 function searchHospital(name) {
-  let h = HospitalList.filter((e) => e.name.includes(name.toLowerCase()))
-  document.getElementById('hlist').innerHTML = `
-  <tr>
+  let h = HospitalList.filter((e) => e.name.includes(name))
+  let table=document.getElementById('hlist')
+  table.innerHTML=`<tr>
 <td class="attribute">Name</td>
 <td class="attribute">Location</td>
+<td class="attribute">Find Location</td>
 <td class="attribute">Pincode</td>
-</tr>
-  <tr>
-  <td>${h[0].name}</td>
-  <td><a href='${h[0].address}' style='color:black'>Location</a></td>
-  <td>${h[0].pincode}</td>
-  </tr>`
+</tr>`
+  h.forEach((e) => {
+    table.innerHTML += `<tr>
+    <td>${e.name}</td>
+    <td>${e.address}</td>
+    <td><a href='${e.addresslink}' style='color:black'>Location</a></td>
+    <td>${e.pincode}</td>
+    </tr>`
+  })
 }
 
 //reset hospital list
@@ -142,12 +147,14 @@ function reset(){
     table.innerHTML=`<tr>
 <td class="attribute">Name</td>
 <td class="attribute">Location</td>
+<td class="attribute">Find Location</td>
 <td class="attribute">Pincode</td>
 </tr>`
   HospitalList.forEach((e) => {
     table.innerHTML += `<tr>
     <td>${e.name}</td>
-    <td><a href='${e.address}' style='color:black'>Location</a></td>
+    <td>${e.address}</td>
+    <td><a href='${e.addresslink}' style='color:black'>Location</a></td>
     <td>${e.pincode}</td>
     </tr>`
   })

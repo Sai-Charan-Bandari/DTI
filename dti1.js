@@ -4,14 +4,54 @@ let HospitalList = []
 async function getHospitalList() {
   let k = await fetch('http://localhost:7000/hospital-list')
   HospitalList = await k.json()
-  // console.log(k)
+  console.log('fetched hospital list')
+  //after hospital list is ready ... then we need to call for patients list
+  getPatientsList()
 }
 getHospitalList()
 /////////////////////////////////////
+//update the patients list in the homepage
+let patientListLimit=5 //contains count of the list items
+async function getPatientsList(){
+  try{
+    let k=await fetch('http://localhost:7000/patient-list/no'+patientListLimit)
+    k=await k.json()
+    console.log('fetched patients list')
+    document.getElementById('home_patient_list').innerHTML=` <th colspan="4">Blood Requirements</th>
+    <tr>
+        <td class="attribute">Name</td>
+        <td class="attribute">Blood Group</td>
+        <td class="attribute">Hospital Name</td>
+        <td class="attribute">Hospital Address</td>
+        <!-- <td class="attribute">Date</td> -->
+    </tr>`
+    k.forEach((e)=>{
+      let {addresslink,address}=HospitalList.find((h)=>h.hospitalid==e.hospitalid)
+      document.getElementById('home_patient_list').innerHTML += `
+      <tr>
+          <td >${e.name}</td>
+          <td >${e.bloodgroup}</td>
+          <td><a href='${addresslink}' style='color:black'>${e.hospitalName}</a></td>
+          <td >${address}</td>
+          <!-- <td >${Date}</td> -->
+      </tr>`
+    })
+  }catch(e){
+    console.log('could not fetch patients list')
+  }
+}
+//it is better to call patients list after calling hospital list 
+// bcoz we r dependent on hospital list to get hospital details like address,links for each patient
+// getPatientsList()
+/////////////////////////////////////
+function getMorePatients(){
+  patientListLimit+=5
+  getPatientsList()
+}
+/////////////////////////////////////
 function searchHospital(name) {
-  let h = HospitalList.filter((e) => e.name.includes(name.toLowerCase()))
-  console.log(h)
-  window.open(h[0].address, '_blank');
+  let h = HospitalList.filter((e) => e.name.includes(name))
+  window.open(h[0].addresslink, '_blank');
 }
 /////////////////////////////////////
 // setTimeout(signup, 15000);

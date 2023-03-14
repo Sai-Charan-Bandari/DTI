@@ -116,6 +116,9 @@
         <input type="text" placeholder="8768719870">
         <input type="text" placeholder="Madhurawada Visakhapatnam">
         <input type="text" placeholder="530048">
+        <!-- <a href='#' style='color:black;width: 95%;'>Checkout Location</a> -->
+
+        <input type="button" value="Checkout Location" name="." onclick="window.open(this.name,'_parent')"/>
         <input type="button" value="Goto Authorized Actions" onclick="window.open('dti1_login.html','_parent')">
         <input type="button" value="Log Out" onclick="logout()">
     </div>
@@ -156,6 +159,8 @@
             children[2].value=hospitalData.phone
             children[3].value=hospitalData.address
             children[4].value=hospitalData.pincode
+            children[5].name=hospitalData.addresslink
+            // children[5].href=hospitalData.addresslink
         }catch(e){
             document.getElementById('hospital').innerHTML='Could not find account'
         }

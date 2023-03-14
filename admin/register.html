@@ -95,6 +95,7 @@
         <input type="text" placeholder="Hospital Id">
         <input type="number" placeholder="Phone No">
         <input type="text" placeholder="Address">
+        <input type="text" placeholder="Address Link for Google Maps">
         <input type="number" placeholder="Pincode">
         <input type="text" placeholder="UserId/Email">
         <input type="text" placeholder="Password">
@@ -111,11 +112,12 @@
         let hospitalid=inputs[1].value
         let phone=inputs[2].value
         let address=inputs[3].value
-        let pincode=inputs[4].value
-        let uid=inputs[5].value
-        let password=inputs[6].value
+        let addresslink=inputs[4].value
+        let pincode=inputs[5].value
+        let uid=inputs[6].value
+        let password=inputs[7].value
        let k=await fetch('http://localhost:7000/hospital-account',{method:"post",body:JSON.stringify({
-            name,hospitalid,phone,address,pincode,uid,password
+            name,hospitalid,phone,address,pincode,uid,password,addresslink
         }),headers:{"Content-Type":"application/json"}})
         try{
             k=await k.json()

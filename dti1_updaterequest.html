@@ -88,17 +88,32 @@
 </header>
 <div class="body" >
     <div class="signupheading">
-        Close Requests
+        Update Patient Details
     </div>
      <div class="inner">
         <div id="title" style="color:white;background-color: black;text-align: center;padding:5px;"></div>
+        <div style="display: flex;">
+         <button onclick="patientId='';document.getElementById('patient').style.display='none';resetPatientList()">Reset</button>
+            <input type="text" style="width:80%;height: fit-content;" placeholder="Search for patients">
+             <button onclick="searchPatient()">Search</button>
+        </div>
+        <!-- THIS IS THE UPDATE FORM -->
+        <div class="inner" id="patient" style="display: none;">
+            <input type="text" placeholder="name">
+            <input type="number" placeholder="age">
+            <input type="text" placeholder="bloodgroup">
+            <input type="text" placeholder="phone">
+            <div class="gender">
+                <label for="m">Male</label>
+                <input type="radio" name="gender" id="m" checked>
+                <label for="f">Female</label>
+                <input type="radio" name="gender" id="f">
+            </div>
+            <input type="button" value="Update" onclick="updateRequest()">
+            <input type="button" value="Cancel" onclick="patientId='';document.getElementById('patient').style.display='none';">
+        </div>
         <table id="plist">
            </table>
-           <div style="display: flex;">
-            <button onclick="resetPatientList()">Reset</button>
-               <input type="text" style="width:80%;height: fit-content;" placeholder="Search for patients">
-                <button onclick="submitData()">Search</button>
-           </div>
 
     </div>
     <div id="d" style="box-sizing:border-box"></div>
@@ -106,9 +121,8 @@
 <script>
     //these are the root object for this pg
     //it will be initialized by validateUser()
-    let hospitalData=null
     let patientsList=[]
-
+    let patientId=''
    async function resetPatientList(){
         try{
             let p=await fetch('http://localhost:7000/patient-list/'+hospitalData.hospitalid)
@@ -119,7 +133,7 @@
                 <td class="attribute">Age</td>
                 <td class="attribute">Gender</td>
                 <td class="attribute">Bloodgroup</td>
-                <td class="attribute">Close Request</td>
+                <td class="attribute">Update Request</td>
             </tr>`
   patientsList.forEach((e) => {
     document.getElementById('plist').innerHTML += `<tr>
@@ -127,7 +141,7 @@
     <td>${e.age}</td>
     <td>${e.gender}</td>
     <td>${e.bloodgroup}</td>
-    <td class="attribute" onclick="closeRequest(${JSON.stringify(e).split('"').join("&quot;")})">Close</td>
+    <td class="attribute" onclick="showForm(${JSON.stringify(e).split('"').join("&quot;")})">Update</td>
     </tr>`
   }) }catch(e){
             document.getElementById('plist').innerHTML = 'could not fetch patients list'
@@ -158,21 +172,32 @@
     }
     validateUser()
 
-    async function closeRequest(obj){
-        // obj=JSON.parse(obj)
-        console.log(obj)
-        alert('are u sure u want to remove this patient.. was the blood request fulfilled , by whom ,reason for closing')
-        let k=await fetch('http://localhost:7000/remove-patient/'+JSON.parse(hospitalData.hospitalid), {
-            method:'delete',
-            body:JSON.stringify(obj)
-            ,headers:{"Content-Type":"application/json"}
-        })
-        k=await k.text()
-        if(k=='X') alert('deletion unsuccessful')
-        else {alert('successfully deleted '+k);resetPatientList()}
+    async function updateRequest(){
+        let patientData={}
+        let children=document.getElementById('patient').children
+             patientData.name=children[0].value
+             patientData.age=children[1].value
+             patientData.bloodgroup=children[2].value
+             patientData.phone=children[3].value
+             patientData.gender=children[4].checked ? 'male' : 'female'
+            // console.log(patientData)
+            if(confirm('are u sure u want to update this patient..?')){
+                let k=await fetch('http://localhost:7000/update-patient/'+JSON.parse(hospitalData.hospitalid)+'/'+patientId, {
+                method:'put',
+                body:JSON.stringify(patientData)
+                ,headers:{"Content-Type":"application/json"}
+            })
+            k=await k.text()
+            if(k=='X') alert('updation unsuccessful')
+            else {
+                alert('successfully updated ');
+                patientId='' //resetting patient id
+                document.getElementById('patient').style.display='none'
+                resetPatientList()}
+            }
     }
 
-    async function submitData(){
+    async function searchPatient(){
         let input=document.getElementsByTagName('input')[0].value
        let arr=patientsList.filter((e)=>e.name.includes(input.toLowerCase()))
        document.getElementById('plist').innerHTML=` <th colspan="4">Hospital List</th>
@@ -181,7 +206,7 @@
                 <td class="attribute">Age</td>
                 <td class="attribute">Gender</td>
                 <td class="attribute">Bloodgroup</td>
-                <td class="attribute">Close Request</td>
+                <td class="attribute">Update Request</td>
             </tr>`
   arr.forEach((e) => {
     document.getElementById('plist').innerHTML += `<tr>
@@ -189,11 +214,25 @@
     <td>${e.age}</td>
     <td>${e.gender}</td>
     <td>${e.bloodgroup}</td>
-    <td class="attribute" onclick="closeRequest(${JSON.stringify(e).split('"').join("&quot;")})">Close</td>
+    <td class="attribute" onclick="showForm(${JSON.stringify(e).split('"').join("&quot;")})">Update</td>
     </tr>`
   })
     }
 
+    function showForm(obj){
+        document.getElementById('patient').style.display='flex'
+        // setting the id of the patient
+        patientId=obj._id
+        // console.log(obj)
+        let children=document.getElementById('patient').children
+            children[0].value=obj.name
+            children[1].value=obj.age
+            children[2].value=obj.bloodgroup
+            children[3].value=obj.phone
+            if(obj.gender=='female'){
+                document.getElementById('f').checked=true
+            }
+    }
        
 </script>
 </body>
