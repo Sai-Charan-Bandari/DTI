@@ -123,7 +123,7 @@ getHospitalList()
 
 //search a hospital
 function searchHospital(name) {
-  let h = HospitalList.filter((e) => e.name.includes(name))
+  let h = HospitalList.filter((e) => e.name.toLowerCase().includes(name.toLowerCase()))
   let table=document.getElementById('hlist')
   table.innerHTML=`<tr>
 <td class="attribute">Name</td>

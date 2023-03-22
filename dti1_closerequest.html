@@ -174,7 +174,7 @@
 
     async function submitData(){
         let input=document.getElementsByTagName('input')[0].value
-       let arr=patientsList.filter((e)=>e.name.includes(input.toLowerCase()))
+       let arr=patientsList.filter((e)=>e.name.toLowerCase().includes(input.toLowerCase()))
        document.getElementById('plist').innerHTML=` <th colspan="4">Hospital List</th>
             <tr>
                 <td class="attribute">Name</td>
