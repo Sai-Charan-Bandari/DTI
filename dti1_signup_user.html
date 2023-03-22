@@ -110,6 +110,7 @@
 </div>
 </body>
 <script>
+    const SERVER_URL='https://d-gkh4.onrender.com'
    async function submitData(){
         let inputs=document.getElementsByTagName('input')
         let name=inputs[0].value
@@ -124,7 +125,7 @@
         // console.log({
         //     name,age,bloodgroup,phone,address,pincode,gender,uid,password
         // })
-       let k=await fetch('http://localhost:7000/user-account',{method:"post",body:JSON.stringify({
+       let k=await fetch(SERVER_URL+'/user-account',{method:"post",body:JSON.stringify({
             name,age,bloodgroup,phone,address,pincode,gender,uid,password
         }),headers:{"Content-Type":"application/json"}})
         try{

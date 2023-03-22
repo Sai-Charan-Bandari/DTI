@@ -119,13 +119,14 @@
     <div id="d" style="box-sizing:border-box"></div>
 </div>
 <script>
+    const SERVER_URL='https://d-gkh4.onrender.com'
     //these are the root object for this pg
     //it will be initialized by validateUser()
     let patientsList=[]
     let patientId=''
    async function resetPatientList(){
         try{
-            let p=await fetch('http://localhost:7000/patient-list/'+hospitalData.hospitalid)
+            let p=await fetch(SERVER_URL+'/patient-list/'+hospitalData.hospitalid)
         patientsList=await p.json()
                 document.getElementById('plist').innerHTML=` <th colspan="4">Hospital List</th>
             <tr>
@@ -160,7 +161,7 @@
     }else {
         //getting/verifying hospital
         try{
-        let k=await fetch('http://localhost:7000/validate-hospital-account/'+JSON.parse(u).id)
+        let k=await fetch(SERVER_URL+'/validate-hospital-account/'+JSON.parse(u).id)
         hospitalData=await k.json()
         document.getElementById('title').innerHTML=`Signed in as ${hospitalData.name}`
         }catch(e){
@@ -182,7 +183,7 @@
              patientData.gender=document.getElementById('m').checked ? 'male' : 'female'
             // console.log(patientData)
             if(confirm('are u sure u want to update this patient..?')){
-                let k=await fetch('http://localhost:7000/update-patient/'+JSON.parse(hospitalData.hospitalid)+'/'+patientId, {
+                let k=await fetch(SERVER_URL+'/update-patient/'+JSON.parse(hospitalData.hospitalid)+'/'+patientId, {
                 method:'put',
                 body:JSON.stringify(patientData)
                 ,headers:{"Content-Type":"application/json"}

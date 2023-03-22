@@ -125,6 +125,7 @@
 </div>
 </body>
 <script>
+    const SERVER_URL='https://d-gkh4.onrender.com'
     async function findUser(){
         let u=localStorage.getItem('dti_user')
     if(!u){
@@ -132,7 +133,7 @@
     }else if(JSON.parse(u).type==false){
         document.getElementById('user').style.display='flex'
         try{
-            let k=await fetch('http://localhost:7000/validate-user-account/'+JSON.parse(u).id)
+            let k=await fetch(SERVER_URL+'/validate-user-account/'+JSON.parse(u).id)
             let userData=await k.json()
             let children=document.getElementById('user').children
             children[0].value=userData.name
@@ -151,7 +152,7 @@
     }else {
         document.getElementById('hospital').style.display='flex'
         try{
-            let k=await fetch('http://localhost:7000/validate-hospital-account/'+JSON.parse(u).id)
+            let k=await fetch(SERVER_URL+'/validate-hospital-account/'+JSON.parse(u).id)
             let hospitalData=await k.json()
             let children=document.getElementById('hospital').children
             children[0].value=hospitalData.name

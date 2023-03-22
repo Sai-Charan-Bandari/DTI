@@ -104,6 +104,7 @@
 </div>
 </body>
 <script>
+    const SERVER_URL='https://d-gkh4.onrender.com'
     alert('Only admin is allowed to register hospitals')
    async function submitData(){
        if(confirm('Confirm to register Hospital')){
@@ -116,7 +117,7 @@
         let pincode=inputs[5].value
         let uid=inputs[6].value
         let password=inputs[7].value
-       let k=await fetch('http://localhost:7000/hospital-account',{method:"post",body:JSON.stringify({
+       let k=await fetch(SERVER_URL+'/hospital-account',{method:"post",body:JSON.stringify({
             name,hospitalid,phone,address,pincode,uid,password,addresslink
         }),headers:{"Content-Type":"application/json"}})
         try{

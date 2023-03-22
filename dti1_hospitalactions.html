@@ -102,6 +102,7 @@
 </div>
 
 <script>
+    const SERVER_URL='https://d-gkh4.onrender.com'
  //this is the root object for this pg
     //it will be initialized by validateUser()
     let hospitalData=null
@@ -117,7 +118,7 @@
         document.getElementsByTagName('body')[0].innerHTML='User cannot access this page'
     }else {
         try{
-        let k=await fetch('http://localhost:7000/validate-hospital-account/'+JSON.parse(u).id)
+        let k=await fetch(SERVER_URL+'/validate-hospital-account/'+JSON.parse(u).id)
         hospitalData=await k.json()
         document.getElementById('title').innerHTML=`Signed in as ${hospitalData.name}`
         }catch(e){

@@ -111,11 +111,12 @@
 </div>
 </body>
 <script>
+    const SERVER_URL='https://d-gkh4.onrender.com'
    let HospitalList = []
 
 //fetch hospital data 
 async function getHospitalList() {
-  let k = await fetch('http://localhost:7000/hospital-list')
+  let k = await fetch(SERVER_URL+'/hospital-list')
   HospitalList = await k.json()
     reset()
 }

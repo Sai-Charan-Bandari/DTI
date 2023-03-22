@@ -101,13 +101,14 @@
 </div>
 
 <script>
+    const SERVER_URL='https://d-gkh4.onrender.com'
 async function check()
 {
     c=document.getElementById("hospitalid").value;
     a=document.getElementById("uid").value;
     b=document.getElementById("psswd").value;
     // get method cannot have body so i am using post
-    let k=await fetch('http://localhost:7000/hospital-account-login',{
+    let k=await fetch(SERVER_URL+'/hospital-account-login',{
         method:'post',
         body:JSON.stringify({hospitalid:c,uid:a,password:b})
         ,headers:{"Content-Type":"application/json"}

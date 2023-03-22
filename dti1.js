@@ -1,8 +1,9 @@
+const SERVER_URL='https://d-gkh4.onrender.com'
 let HospitalList = []
 /////////////////////////////////////
 //fetch hospital data 
 async function getHospitalList() {
-  let k = await fetch('http://localhost:7000/hospital-list')
+  let k = await fetch(SERVER_URL+'/hospital-list')
   HospitalList = await k.json()
   console.log('fetched hospital list')
   //after hospital list is ready ... then we need to call for patients list
@@ -14,7 +15,7 @@ getHospitalList()
 let patientListLimit=5 //contains count of the list items
 async function getPatientsList(){
   try{
-    let k=await fetch('http://localhost:7000/patient-list/no'+patientListLimit)
+    let k=await fetch(SERVER_URL+'/patient-list/no'+patientListLimit)
     k=await k.json()
     console.log('fetched patients list')
     document.getElementById('home_patient_list').innerHTML=` <th colspan="4">Blood Requirements</th>
