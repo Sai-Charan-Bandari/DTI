@@ -71,6 +71,7 @@
             padding:10px
         } */
     </style>
+    <script src="set_global_var.js"></script>
 </head>
 <body>
     <header>
@@ -111,7 +112,8 @@
 </div>
 </body>
 <script>
-    const SERVER_URL='https://d-gkh4.onrender.com'
+    const SERVER_URL=localStorage.getItem('Dti_server_url')
+    
    let HospitalList = []
 
 //fetch hospital data 
@@ -146,17 +148,17 @@ function searchHospital(name) {
 function reset(){
     let table = document.getElementById('hlist')
     table.innerHTML=`<tr>
-<td class="attribute">Name</td>
-<td class="attribute">Location</td>
-<td class="attribute">Find Location</td>
-<td class="attribute">Pincode</td>
+<td class="attribute" style="font-size:20px">Name</td>
+<td class="attribute" style="font-size:20px">Location</td>
+<td class="attribute" style="font-size:20px">Find Location</td>
+<td class="attribute" style="font-size:20px">Pincode</td>
 </tr>`
   HospitalList.forEach((e) => {
     table.innerHTML += `<tr>
-    <td>${e.name}</td>
-    <td>${e.address}</td>
-    <td><a href='${e.addresslink}' style='color:black'>Location</a></td>
-    <td>${e.pincode}</td>
+    <td style="font-size:20px">${e.name}</td>
+    <td style="font-size:20px">${e.address}</td>
+    <td style="font-size:20px"><a href='${e.addresslink}' style='color:black'>Location</a></td>
+    <td style="font-size:20px">${e.pincode}</td>
     </tr>`
   })
 }

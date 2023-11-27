@@ -1,188 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimal Blood Delivery System</title>
-    <link rel="icon" type="image/x-icon" href="https://image.shutterstock.com/image-vector/vector-drop-hands-icon-simply-260nw-13158760.jpg">
+    <link rel="icon" type="image/x-icon"
+        href="https://image.shutterstock.com/image-vector/vector-drop-hands-icon-simply-260nw-13158760.jpg">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="dti1.css">
 
     <style>
-        header{
-            font-size:30px;
+        header {
+            font-size: 30px;
         }
-        .inner{
+
+        .inner {
             display: flex;
             flex-direction: column;
             /* margin:auto; */
             background-color: red;
-            width:60%;
+            width: 60%;
             padding: 20px;
             row-gap: 15px;
         }
-        .inner input{
+
+        .inner input {
             height: 60px;
-            font-size:20px;
+            font-size: 20px;
         }
-        .inner input:placeholder-shown{
-            font-size:20px;
-            text-align: center ;
+
+        .inner input:placeholder-shown {
+            font-size: 20px;
+            text-align: center;
         }
-        .body{
+
+        .body {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        .signupheading{
-            margin:10px;
+
+        .signupheading {
+            margin: 10px;
             padding: 20px;
             text-align: center;
-            width:60%;
+            width: 60%;
             background-color: black;
             font-size: 30px;
-            color:white;
+            color: white;
         }
-     table,tr{
-        text-align: center;
-        font-size: 25px;
-    }
-    #tab_heading{
-         font-size: 25px;
-         font-weight: bold;
-     }
+
+        table,
+        tr {
+            text-align: center;
+            font-size: 25px;
+        }
+
+        #tab_heading {
+            font-size: 25px;
+            font-weight: bold;
+        }
     </style>
+    <script src="set_global_var.js"></script>
 </head>
+
 <body>
     <header>
         <div class="left">
-            <a href="https://github.com/Sai-Charan-Bandari/DTI/tree/temp" style="background-color: transparent;"><img src="https://image.shutterstock.com/image-vector/vector-drop-hands-icon-simply-260nw-13158760.jpg" alt=""></a>
+            <a href="https://github.com/Sai-Charan-Bandari/DTI/tree/temp" style="background-color: transparent;"><img
+                    src="https://image.shutterstock.com/image-vector/vector-drop-hands-icon-simply-260nw-13158760.jpg"
+                    alt=""></a>
         </div>
         <div class="center">
             Optimal Blood Delivery System
 
         </div>
-        
+
         <div class="right">
-            
+
             <button onclick="disclose()"><span class="material-icons"> info</span></button>
-            <button onclick="location.href='https://play.google.com/store/search?q=blood+donation+apps&c=apps'"><span class="material-icons">apps</span></button>
-            <button onclick="location.href='dti1_accountdetails.html'"><span class="material-icons">person</span></button>
+            <button onclick="location.href='https://play.google.com/store/search?q=blood+donation+apps&c=apps'"><span
+                    class="material-icons">apps</span></button>
+            <button onclick="location.href='dti1_accountdetails.html'"><span
+                    class="material-icons">person</span></button>
 
         </div>
     </header>
-<div class="body" >
-    <div class="signupheading">
-       Emergency Blood Requirement
+    <div class="body">
+        <div class="signupheading">
+            Emergency Blood Requirement
+        </div>
+        <div class="inner">
+            <table id="plist">
+                <tr id="tab_heading">
+                    <td colspan="7">List of Recepients near you</td>
+                </tr>
+                <tr>
+                    <td class="attribute">Name</td>
+                    <td class="attribute">Age</td>
+                    <td class="attribute">Gender</td>
+                    <td class="attribute">Blood Group</td>
+                    <td class="attribute">Guardian Ph</td>
+                    <td class="attribute">Hospital</td>
+                    <td class="attribute">Address</td>
+                    <!-- <td class="attribute">City</td> -->
+                    <!-- <td class="attribute">Date</td> -->
+                </tr>
+            </table>
+
+            <!-- <table id="table"></table> -->
+        </div>
+        <div id="d"></div>
+        <div id="d2"></div>
     </div>
-     <div class="inner">
-        <table id="table">
-            <tr id="tab_heading">
-                <td colspan="7">List of Recepients</td>
-             </tr>
+    <script>
+        const SERVER_URL=localStorage.getItem('Dti_server_url')
+
+        //these are the root object for this pg
+        //it will be initialized by validateUser()
+        let hospitalData = null
+        let patientsList = []
+
+        async function resetPatientList() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    try {
+                        let p = await fetch(SERVER_URL + '/patient-list/coord' + position.coords.latitude + ',' + position.coords.longitude)
+                        patientsList = await p.json()
+                        document.getElementById('plist').innerHTML = ` 
+                        <tr id="tab_heading">
+                    <td colspan="7">List of Recepients near you</td>
+                </tr>
             <tr>
                 <td class="attribute">Name</td>
                 <td class="attribute">Age</td>
-                <td class="attribute">Blood Group</td>
+                <td class="attribute">Gender</td>
+                <td class="attribute">Bloodgroup</td>
                 <td class="attribute">Guardian Ph</td>
-                <td class="attribute">Hospital</td>
-                <!-- <td class="attribute">City</td> -->
-                <!-- <td class="attribute">Date</td> -->
-            </tr>
-            <!-- <tr>
-                <td>Charan</td>
-                <td>19</td>
-                <td>O+</td>
-                <td>Vizag</td>
-                <td>K G H</td>
-                <td>28/06/2022</td>
+                    <td class="attribute">Hospital</td>
+                    <td class="attribute">Address</td>
+            </tr>`
+                        patientsList.forEach((e) => {
+                            document.getElementById('plist').innerHTML += `<tr>
+    <td>${e.name}</td>
+    <td>${e.age}</td>
+    <td>${e.gender}</td>
+    <td>${e.bloodgroup}</td>
+    <td>${e.phone}</td>
+    <td style="cursor:pointer;"><a href='${e.addresslink}'>${e.hospitalName}</a></td>
+    <td style="cursor:pointer;"><a href='${e.addresslink}'>${e.address}</a></td>
+    </tr>`
+                        })
+                    } catch (e) {
+                        document.getElementById('plist').innerHTML = 'could not fetch patients list'
+                    }
+                });
 
-            </tr>
-            <tr>
-                <td>Sailesh</td>
-                <td>63</td>
-                <td>AB-</td>
-                <td>Vizag</td>
-                <td>Seven Hills Hospital</td>
-                <td>21/06/2022</td>
+            } else {
+                document.getElementById('plist').innerHTML = "Geolocation is not supported by this browser.";
+            }
 
-            </tr> -->
+        }
 
-           </table>
+        resetPatientList()
 
-           <!-- <table id="table"></table> -->
-    </div>
-    <div id="d"></div>
-    <div id="d2"></div>
-</div>
-<script>
-const SERVER_URL='https://d-gkh4.onrender.com'
-    let name=localStorage.getItem("name");
-    let age=localStorage.getItem("age");
-    let bloodgrp=localStorage.getItem("bloodgrp");
-    let ph=localStorage.getItem("ph");
-    let hsp=localStorage.getItem("hsp");
-    let addr=localStorage.getItem("addr");
-
-    let nlist=name.split(',');
-    let alist=age.split(',');
-    let blist=bloodgrp.split(',');
-    let plist=ph.split(',');
-    let hlist=hsp.split(',');
-    let addrlist=addr.split('$');
-
-    let length=nlist.length;
-
-    //tester
-    {
-        //initalizing to empty so that prev list of links is removed from div("d") and
-        // replaced with new updated list of links
-        document.getElementById("d").innerHTML = "";
-        let addr=localStorage.getItem("addr");
-        let addrlist=addr.split('$');
-        for(let i=0;i<length;i++)
-       {
-        document.getElementById("d").innerHTML += "<div>"+addrlist[i]+"</div>";
-        console.log(addrlist[i]);
-       }
-      }
-        //end of tester code
-
-    //tester2
-    {
-        //gives string of links
-        document.getElementById("d2").innerHTML = "ADDR ::: ";
-        let =localStorage.getItem("addr");
-        document.getElementById("d2").innerHTML += addr;
-       
-      }
-        //end of tester code
-
-    table=document.getElementById("table");
-    //the following functions are related to table tag
-    for(let i=0;i<length;i++)
-    {
-        //insertRow(i) inserts a row in the specified index
-        //due to which the first inserted row is above the rows with column headings and table title
-        //similarly each inserted row goes to its specified order and our pre-written 2 rows will end up last    
-        //so we use insertRow(-1) to insert each row at last index 
-        let newRow = table.insertRow(-1);
-        let cell1 = newRow.insertCell();
-        let cell2 = newRow.insertCell();
-        let cell3 = newRow.insertCell();
-        let cell4 = newRow.insertCell();
-        let cell5 = newRow.insertCell();
-
-        cell1.innerHTML=nlist[i];
-        cell2.innerHTML=alist[i];
-        cell3.innerHTML=blist[i];
-        cell4.innerHTML=plist[i];
-        cell5.innerHTML='<a href="' + addrlist[i] + '" target="_blank">'+ hlist[i] + '</a>';
-        console.log(i);
-    }
-
-</script>
+    </script>
 </body>
+
 </html>

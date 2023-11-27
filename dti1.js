@@ -1,4 +1,5 @@
-const SERVER_URL='https://d-gkh4.onrender.com'
+const SERVER_URL=localStorage.getItem('Dti_server_url')
+
 let HospitalList = []
 /////////////////////////////////////
 //fetch hospital data 
@@ -51,8 +52,11 @@ function getMorePatients(){
 }
 /////////////////////////////////////
 function searchHospital(name) {
-  let h = HospitalList.filter((e) => e.name.includes(name))
-  window.open(h[0].addresslink, '_blank');
+  if(name!=''){
+    let h = HospitalList.filter((e) => e.name.toLowerCase().includes(name.toLowerCase()))
+    console.log(h)
+    window.open(h[0].addresslink, '_blank');
+  }
 }
 /////////////////////////////////////
 // setTimeout(signup, 15000);
@@ -105,6 +109,7 @@ function disclose() {
   let x = document.getElementById("disclose");
   if (x.style.display == 'none') {
     x.style.display = 'block';
+    alert("scroll down to view the creator's note")
   }
   else
     x.style.display = 'none';

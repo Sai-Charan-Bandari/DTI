@@ -68,6 +68,7 @@
             border: 5px solid black;
         }
     </style>
+    <script src="set_global_var.js"></script>
 </head>
 <body>
     <header>
@@ -101,7 +102,8 @@
 </div>
 
 <script>
-    const SERVER_URL='https://d-gkh4.onrender.com'
+    const SERVER_URL=localStorage.getItem('Dti_server_url')
+    
 async function check()
 {
     c=document.getElementById("hospitalid").value;
@@ -117,7 +119,7 @@ async function check()
       k=await k.json()
       localStorage.setItem('dti_user',JSON.stringify({type:true,id:k.hospitalid})) //type=true =>hospital else user
       alert('logged in')
-      console.log(k)
+    //   console.log(k)
       window.open("dti1_hospitalactions.html","_parent");
     }catch(e){
         alert('invalid credentials')

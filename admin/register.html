@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!-- IMPORTANT NOTE -->
+    <!-- THIS PAGE MUST BE REMOVED BEFORE HOSTING THIS SITE. 
+        THIS PAGE SHOULD ONLY BE ACCESSED BY ADMINISTRATORS AND HOSTED SEPARATELY WITH HIGH AUTHENTICATION AND AUTHORIZATION.
+    THIS PAGE SHOULD BE HOSTED BY A SEPARATE SERVER WHICH ACCEPTS REQUESTS ONLY FROM A FEW IP ADDRESSES AND NOT OPEN TO ALL PUBLIC IP ADDRESSES. -->
+    <!--  -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -67,6 +72,7 @@
             border: 5px solid black;
         }
     </style>
+    <script src="set_global_var.js"></script>
 </head>
 <body>
 <header>
@@ -95,16 +101,21 @@
         <input type="text" placeholder="Hospital Id">
         <input type="number" placeholder="Phone No">
         <input type="text" placeholder="Address">
+        <div style="display: flex;justify-content: center;">
+            <input type="text" style="width: 50%;" placeholder="Latitude (in decimal degrees format)">
+            <input type="text" style="width: 50%;" placeholder="Longitude (in decimal degrees format)">
+        </div>
         <input type="text" placeholder="Address Link for Google Maps">
         <input type="number" placeholder="Pincode">
         <input type="text" placeholder="UserId/Email">
-        <input type="text" placeholder="Password">
+        <input type="password" placeholder="Password">
         <button onclick="submitData()" style="width: 100%;padding: 15px;">Submit</button>
     </div>
 </div>
 </body>
 <script>
-    const SERVER_URL='https://d-gkh4.onrender.com'
+    const SERVER_URL=localStorage.getItem('Dti_server_url')
+
     alert('Only admin is allowed to register hospitals')
    async function submitData(){
        if(confirm('Confirm to register Hospital')){
@@ -113,14 +124,22 @@
         let hospitalid=inputs[1].value
         let phone=inputs[2].value
         let address=inputs[3].value
-        let addresslink=inputs[4].value
-        let pincode=inputs[5].value
-        let uid=inputs[6].value
-        let password=inputs[7].value
-       let k=await fetch(SERVER_URL+'/hospital-account',{method:"post",body:JSON.stringify({
-            name,hospitalid,phone,address,pincode,uid,password,addresslink
-        }),headers:{"Content-Type":"application/json"}})
+        const pattern = /^-?\d+(\.\d+)?$/;
+        let coordinates=inputs[4].value+','+inputs[5].value
+        if(!(pattern.test(inputs[4].value) && pattern.test(inputs[5].value))){
+            // console.log(coordinates)
+            alert('invalid coordinates')
+            return
+        }
+        let addresslink=inputs[6].value
+        let pincode=inputs[7].value
+        let uid=inputs[8].value
+        let password=inputs[9].value
         try{
+            console.log(SERVER_URL)
+       let k=await fetch(SERVER_URL+'/hospital-account',{method:"post",body:JSON.stringify({
+            name,hospitalid,phone,address,coordinates,pincode,uid,password,addresslink
+        }),headers:{"Content-Type":"application/json"}})
             k=await k.json()
             alert('registered hospital ',k.name)
         }catch(e){alert('hospital already registered')}

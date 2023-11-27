@@ -67,6 +67,7 @@
             border: 5px solid black;
         }
     </style>
+    <script src="set_global_var.js"></script>
 </head>
 <body>
     <header>
@@ -104,7 +105,8 @@
     <div id="d" style="box-sizing:border-box"></div>
 </div>
 <script>
-    const SERVER_URL='https://d-gkh4.onrender.com'
+    const SERVER_URL=localStorage.getItem('Dti_server_url')
+
     //these are the root object for this pg
     //it will be initialized by validateUser()
     let hospitalData=null
@@ -161,7 +163,7 @@
 
     async function closeRequest(obj){
         // obj=JSON.parse(obj)
-        console.log(obj)
+        // console.log(obj)
         alert('are u sure u want to remove this patient.. was the blood request fulfilled , by whom ,reason for closing')
         let k=await fetch(SERVER_URL+'/remove-patient/'+JSON.parse(hospitalData.hospitalid), {
             method:'delete',

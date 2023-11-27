@@ -67,6 +67,7 @@
             border: 5px solid black;
         }
     </style>
+    <script src="set_global_var.js"></script>
 </head>
 <body>
     <header>
@@ -104,13 +105,14 @@
             <input type="radio" name="gender" id="f" value="female">
         </div>
         <input type="text" placeholder="UserId/Email">
-        <input type="text" placeholder="Password">
+        <input type="password" placeholder="Password">
         <button onclick="submitData()" style="width: 100%;padding: 15px;">Submit</button>
     </div>
 </div>
 </body>
 <script>
-    const SERVER_URL='https://d-gkh4.onrender.com'
+    const SERVER_URL=localStorage.getItem('Dti_server_url')
+
    async function submitData(){
         let inputs=document.getElementsByTagName('input')
         let name=inputs[0].value

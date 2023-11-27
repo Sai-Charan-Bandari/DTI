@@ -68,6 +68,7 @@
             border: 5px solid black;
         }
     </style>
+    <script src="set_global_var.js"></script>
 </head>
 <body>
     <header>
@@ -105,8 +106,8 @@
             <label for="f">Female</label>
             <input type="radio" name="gender" id="f">
         </div>
-        <input type="text" placeholder="No. of Donations : 2">
-        <input type="text" placeholder="Last Donation on : 23/08/2021">
+        <input type="text" placeholder="No. of Donations : 0">
+        <input type="text" placeholder="Last Donation on : --">
         <input type="button" value="Log Out" onclick="logout()">
     </div>
     <!-- HOSPITAL ACC -->
@@ -125,7 +126,8 @@
 </div>
 </body>
 <script>
-    const SERVER_URL='https://d-gkh4.onrender.com'
+    const SERVER_URL=localStorage.getItem('Dti_server_url')
+
     async function findUser(){
         let u=localStorage.getItem('dti_user')
     if(!u){
