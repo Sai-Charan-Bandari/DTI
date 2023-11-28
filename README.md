@@ -1,4 +1,5 @@
 # DTI
+## Add server url to set_global_var.js file to provide the url to all html pages
 ## In emergency page we will calculate user's distance with the hospital's distance if it is <= 50km then we will display those requests. For this thing to work we need longitudes and latitudes of user and each hospital.
 ## The emergency page can be accessed without any login. But it is necessary to provide location access.
 
